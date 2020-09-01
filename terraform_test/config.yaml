@@ -1,9 +1,0 @@
-- group_code : foo
-  app_code : foo_app1
-  service_name : foo app1
-- group_code : foo
-  app_code : foo_app2
-  service_name : bar app0
-- group_code : bar
-  app_code : bar_app
-  service_name : bar app
