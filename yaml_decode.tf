@@ -1,4 +1,3 @@
-#Configure the Bitbucket Provider
 provider "bitbucket" {
   username = var.username
   password = var.password
@@ -24,24 +23,5 @@ resource "bitbucket_repository" "app_repo" {
   name        = local.group_app_set[count.index][0]
   project_key = "${upper(local.group_app_set[count.index][1])}PROJ"
   is_private  = true
+  depends_on = [bitbucket_project.group_proj]
 }
-
-# resource "bitbucket_repository" "test_repo" {
-#   owner       = var.username
-#   name        = local.group_app_set[0][0]
-#   project_key = "${upper(local.group_app_set[0][1])}PROJ"
-#   is_private  = true
-
-#   provisioner "file" {
-#     source      = "README.md"
-#     destination = "${local.group_app_set[0][0]}/README.md"
-
-#     connection {
-#       type     = "winrm"
-#       https    = "true"
-#       user     = var.username
-#       password = var.password
-#       host     = "https://jtb91594@bitbucket.org/jtb91594/${local.group_app_set[0][0]}.git"
-#     }
-#   }
-# }
