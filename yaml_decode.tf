@@ -14,7 +14,7 @@ resource "bitbucket_project" "group_proj" {
   owner      = var.username
   name       = each.value
   key        = "${upper(each.value)}PROJ"
-  is_private = true
+  is_private = false
 }
 
 resource "bitbucket_repository" "app_repo" {
@@ -22,6 +22,14 @@ resource "bitbucket_repository" "app_repo" {
   owner       = var.username
   name        = local.group_app_set[count.index][0]
   project_key = "${upper(local.group_app_set[count.index][1])}PROJ"
-  is_private  = true
-  depends_on = [bitbucket_project.group_proj]
+  is_private  = false
+  depends_on  = [bitbucket_project.group_proj]
+  provisioner "local-exec" {
+    interpreter = ["bash", "-c"]
+    command = templatefile("templates/readme.tpl", { service_name = coalesce([for val in local.group_app_service_vals : val[2] if val[0] == local.group_app_set[count.index][0]]...),
+      username = var.username,
+      password = var.password,
+      slug     = local.group_app_set[count.index][0],
+    count_val = count.index })
+  }
 }
