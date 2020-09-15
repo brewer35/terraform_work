@@ -4,7 +4,7 @@ provider "bitbucket" {
 }
 
 locals {
-  yaml_vals              = yamldecode(file("config.yaml"))
+  yaml_vals              = yamldecode(file(var.file_path))
   group_app_set          = tolist(toset([for config_val in local.yaml_vals : [config_val.app_code, config_val.group_code]]))
   group_app_service_vals = [for config_val in local.yaml_vals : [config_val.app_code, config_val.group_code, config_val.service_name]]
   app_code_tags          = [for config_val in local.yaml_vals : [config_val.tags, config_val.app_code] if contains(keys(config_val), "tags")]

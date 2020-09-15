@@ -4,3 +4,4 @@ terraform.tfvars
 terraform.tfstate
 terraform.tfstate.backup
 file_creation.sh
+temp.yaml
